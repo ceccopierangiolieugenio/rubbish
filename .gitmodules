@@ -1,0 +1,6 @@
+[submodule "modules/binaryRepo"]
+	path = modules/binaryRepo
+	url = git@github.com:ceccopierangiolieugenio/binaryRepo.git
+[submodule "modules/pyTermTk"]
+	path = modules/pyTermTk
+	url = git@github.com:ceccopierangiolieugenio/pyTermTk.git
