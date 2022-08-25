@@ -37,7 +37,6 @@
       <script src="https://ceccopierangiolieugenio.github.io/binaryRepo/pyTermTk/www/codemirror/codemirror.js"></script>
       <script src="https://ceccopierangiolieugenio.github.io/binaryRepo/pyTermTk/www/codemirror/modes/python.js"></script>
     -->
-
     <style>
       .CodeMirror { height: 100%; }
       </style>
@@ -73,7 +72,14 @@
                       ],
                       onClick(event) { run(); }
                     },
-                      html: '<div id="codeArea" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px"></div>'},
+                      html: '<div id="codeArea" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 25px"></div>'+
+                            `<div id="codeArea" style="position: absolute; left: 15px;          right: 0px; bottom: 0px">
+                              <a href="https://github.com/ceccopierangiolieugenio/pyTermTk">pyTermTk</a> sandbox,
+                              Powered by <a href="https://pyodide.org/">Pyodide</a>
+                              and <a href="https://xtermjs.org">xterm.js</a>
+                              and <a href="https://codemirror.net/5/">CodeMirror5</a>
+                              and <a href="https://w2ui.com/">w2ui</a>
+                             </div>`},
                   { type: 'right', size: 1000, resizable: true, style: pstyle,
                     html: '<div id="terminal" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px"></div>' }
               ]
@@ -96,11 +102,6 @@
       w2ui.layout_pyTermTk_sandbox.on('resize', (event) => {
             setTimeout(()=>{fitAddon.fit()},0.5)
       });
-
-      let terminalParent = document.getElementById('terminal').parentElement
-      terminalParent.addEventListener("resize", () => { console.log(terminalParent.offsetWidth) } );
-      terminalParent.addEventListener("resize", () => { console.log(terminalParent.offsetWidth) } );
-
 
       /* Code Mirror */
       let myCodeMirror = CodeMirror(document.getElementById('codeArea'), {
@@ -153,19 +154,19 @@
 
         term.write('Pyodide Proxy - Loaded\n\r')
 
-        let zipResponse = await fetch("TermTk.tgz");
+        let zipResponse = await fetch("bin/TermTk.tgz");
         let zipBinary = await zipResponse.arrayBuffer();
         pyodide.unpackArchive(zipBinary, ".tar.gz");
 
         term.write('TermTk - Loaded\n\r')
 
-        zipResponse = await fetch("demo.tgz");
+        zipResponse = await fetch("bin/demo.tgz");
         zipBinary = await zipResponse.arrayBuffer();
         pyodide.unpackArchive(zipBinary, ".tar.gz");
 
         term.write('Demos - Loaded\n\r')
 
-        zipResponse = await fetch("tutorial.tgz");
+        zipResponse = await fetch("bin/tutorial.tgz");
         zipBinary = await zipResponse.arrayBuffer();
         pyodide.unpackArchive(zipBinary, ".tar.gz");
 
@@ -292,7 +293,6 @@
 
           let filename = document.getElementById("codeUri").value
           let pwd = pyodide.PATH.dirname(filename)
-          console.log(`os.chdir('`+pwd+`')`)
 
           pyodide.runPython(`
             __file__='`+filename+`'
